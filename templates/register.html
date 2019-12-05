@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from v3.bootcss.com/examples/signin/ by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 18 Dec 2013 02:07:10 GMT -->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+  <title>登录</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+
+  <!-- Custom styles for this template -->
+  <link href="css/signin.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+  <div class="container">
+
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">图书</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="index.html">登录</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="btn btn-link" href="reader_reg.html" role="button">注册</a>
+          </li>
+
+
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+
+    <form class="form-signin" role="form">
+      <h2 class="form-signin-heading">请登录</h2>
+
+      <select name="user_grade" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
+        <option value="1">一级读者</option>
+        <option value="2">二级读者</option>
+        <option value="3">三级读者</option>
+      </select>
+
+      <input type="text" name='user_code' class="form-control" placeholder="编号" required autofocus>
+      <input type="text" name='user_name' class="form-control" placeholder="姓名" required>
+      <input type="password" name='user_password' class="form-control" placeholder="密码" required>
+      <input type="password" name='user_phone' class="form-control" placeholder="电话" required>
+      <input type="password" name='user_addr' class="form-control" placeholder="地址" required>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+  <!-- /container -->
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from v3.bootcss.com/examples/signin/ by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 18 Dec 2013 02:07:10 GMT -->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+  <title>登录</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+		.red{color:red}
+		.green{color:green}
+	</style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">图书</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="{% url 'duanxin:login' %}">登录</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="btn btn-link" href="reader_reg.html" role="button">注册</a>
+          </li>
+
+
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <form class="form-signin" role="form" method="post" action="#">
+      <h2 class="form-signin-heading">请注册</h2>
+
+        用户名:<input name='uname' type="text" id="uname"  value='' class="form-control" placeholder="用户名"/><span id='uname_msg' ></span>
+		<br />
+        密码： <input name='pwd' type="text" id="pwd" class="form-control"><span id='pwd_msg'></span>
+        <br>
+        手机号： <input type="text" name='phone' id="phone" value='' class="form-control" placeholder="电话" ><span id='phone_msg' ></span>
+        <br>
+		邮箱:<input name='email' type="text" id="email" class="form-control" placeholder="电子邮箱"/><span id='email_msg' ></span>
+		<br />
+
+
+{#      <select name="user_grade" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">#}
+{#        <option value="1">一级读者</option>#}
+{#        <option value="2">二级读者</option>#}
+{#        <option value="3">三级读者</option>#}
+{#      </select>#}
+{#       <select  name="province" id="province" class="form-control" required="required">#}
+{#        <option value="">--请选择--</option>#}
+{#        <option value="1">北京</option>#}
+{#        <option value="2">山东</option>#}
+{#        <option value="3">山西</option>#}
+{#      </select>#}
+{#      <select name="city" id="city" class="form-control" required="required">#}
+{#        <option value="">--请选择--</option>#}
+{#      </select>#}
+{#      <input type="text" name='phone' id="phone" value='' class="form-control" placeholder="电话" required AUTOCOMPLETE="off">#}
+      <!--验证码 -->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	  	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+	       <input type="text" name='smscode' id='smscode' class="form-control" placeholder="短信验证码" required>
+	    </div>
+	  	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6	">
+	       <button class="btn btn-lg btn-info btn-block" id="sendsms" type='button' style='font-size:14px;'>获取送验证码</button>
+	    </div>
+      </div>
+      <!--图形验证码 django2.0直接调用表单项-->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- 手动生成验证码表单项--->
+          输入验证码: <br>
+
+
+	  	  <img src="{{ image_url}}" alt="captcha" class="captcha">
+          <input autocomplete="off" id="id_captcha_1" name="captcha_1" type="text" placeholder="输入验证码">
+          <input id="id_reg_captcha_0" name="captcha_0" type="hidden" value="{{ hashkey }}">
+      </div>
+      
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h2 style='color:red' id="msg">**</h2>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <button id='but1' class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+      </div>
+    </form>
+
+  </div>
+  <!-- /container -->
+
+  
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+<script>
+//短信验证
+$(function(){
+	$("#smscode").change(function(){
+		console.log('开始验证.....');
+		//1 获取phone和验证码
+		var phone = $("#phone").val();
+		var code = $(this).val();
+		// 2 ajax
+		$.ajax({
+			type:'get',
+			url:'/check_sms/',
+			data:'phone='+phone+'&code='+code,
+			success:function(msg){
+				//结果已经统一规整为json对象了,不需要转换了
+				console.log('结果就是对象'+typeof(msg));
+				if(msg.code=='200'){
+					$('#msg').html('验证码正确')
+				}else{
+					$('#msg').html('验证码输入错误')
+				}
+			},
+			error:function(resp){
+				console.log(resp.status);
+				alert('连接服务器失败')
+			}
+		})
+	})
+})
+//end 短信验证
+</script>
+
+ <script> 
+$(function(){
+	 
+//短信验证码
+//1. 找标签:btn1
+//2. 定时器完成: 显示时间变化!!!
+//setInterval(函数, 时间)
+//3.难点: 定时器中函数,不断减1, 见到<0终止!!!!
+ var btn1 = $('#sendsms');
+ var count=5; // 倒计时数量 一般为60秒!
+ var timer =null; //定时器
+ //事件
+btn1.click(function(){
+ 	phone = $('#phone').val();
+ 	if(phone==''){
+ 		alert('请输入电话号码');
+ 		return false;
+ 	}
+	//Ajax发送短信
+	$.ajax({
+		type:'get',
+		url:'/send_sms/',
+		data:'phone='+phone,
+		success:function(msg){
+			console.log("成功返回结果:"+msg);
+			obj = eval("("+msg+")");
+			if(obj.Message=="OK"){
+				$("#msg").html("发送成功")
+			}else{
+				$("#msg").html("发送失败")
+			}
+		},
+		error:function(resp){
+			console.log(resp.status);
+			alert('连接后台失败')
+		}
+	});
+	//end 发送短信
+	
+	
+ 	//禁用
+ 	$(this).attr("disabled",'true');
+ 	var _this=  $(this);
+ 	//定时器实现时间每次减少1
+ 	timer = setInterval(function(){
+ 		count--;
+ 		console.log("剩余时间:"+count);
+ 		if(count>=0){
+ 			//this表示对象!!!! 表示定时器!!!!
+ 			//this.innerHTML="时间剩余"+ count+"秒";
+ 			_this.html(count+"秒s后重发")
+ 		}else{
+ 			_this.disabled = false;
+ 			clearInterval(timer);
+ 			_this.html("重新发送");
+ 			count=5;
+ 			$('#sendsms').removeAttr("disabled")
+ 		}	
+	 },1000);
+})
+//短信验证end
+	
+})
+</script>
+
+
+<script>
+    $(function(){
+    //刷新
+        $('.captcha').click(function(){
+            $.getJSON("/img_refresh/",function(result){
+                $('.captcha').attr('src', result['image_url']);
+                $('#id_captcha_0').val(result['hashkey'])
+        });
+            return false;
+    });
+    //验证
+    $('#id_captcha_1').blur(function(){
+        console.log('用户输入的:'+$('#id_captcha_1').val());
+            // 获取输入框和隐藏字段id_captcha_0的数值
+            code= $('#id_captcha_1').val();
+            hashkey=$('#id_reg_captcha_0').val();
+            $.getJSON('/img_check',
+            {'code':code,'hashkey':hashkey},function(res){
+            //1 验证码正确,0验证码错误
+                    console.log(res.status);
+            if(res.status){
+                $('#but1').attr('type','submit');
+                $("#msg").html('验证码正确');
+            }else{
+                $('#but1').attr('type','button');
+                $("#msg").html('验证码错误')
+            }
+        })
+    })
+})
+</script>
+<script type="text/javascript">
+        $(function(){
+            console.log('验证用户名...页面加载成功');
+            //1. 找标签   2 加事件  3DOM操作
+            $('#uname').change(function(){
+
+                var uname =$('#uname').val();
+                console.log('用户名:'+uname);
+                //ajax
+                $.ajax({
+                   type: "get",
+                   url: "http://localhost:8000/ajax/",
+                   data: "uname="+uname,
+                   dataType:"json",
+
+                   success: function(msg){
+                     console.log( "返回字符串结果:: " + msg );
+                     //处理结果DOM操作
+                     //json字符串转化为json对象   obj = eval("("+msg+")")
+                     console.log( "返回字符串结果:: " + typeof(msg) );
+                     console.log( "返回字符串结果:: " + msg.result);
+
+                     if(msg.result=='ok'&& uname.length>3){
+                         $('#uname_msg').html('可用').addClass('green');
+                     }else{
+                         $('#uname_msg').html('用户名已存在或长度小于3').removeClass('green').addClass('red')
+                     }
+
+                   },
+                   error:function(msg){
+                     console.log(msg);//错误信息对象
+                     console.log(msg.status)
+                   }
+                });
+            })
+        })
+    </script>
+
+<script type="text/javascript">
+    $(function(){
+
+        //1. 打开页面时验证必填项
+        $('form input.required').each(function(){
+            //console.log($(this).val());
+            var txt = $(this).val();
+            if(txt=='' || txt.length==0){
+               //$(this).after("<span class='msg'>*</span>")
+               $(this).siblings('span').first().html('*')
+            }
+        });
+
+        //2. 失去焦点
+        $('form :input').blur(function(event) {
+            //删除*号
+            $(this).parent().find('.msg').remove();
+
+            //用户名
+            {#console.log('是否是用户名:'+$(this).is('#uname'));#}
+            {#if($(this).is('#uname')){#}
+            {#    var uname = $(this).val();#}
+            {#    if(uname=='' || uname.length==0 || uname.length<2){#}
+            {#        $('#but1').attr('type','button');#}
+            {#        $(this).after("<span class='msg'>名字不合法</span>")#}
+            {#    }else{#}
+            {#        $(this).after("<span class='msg'></span>");#}
+            {#    }#}
+            {#}#}
+            //密码
+            if($(this).is('#pwd')){
+                var regPwd = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+                var pwd = $(this).val();
+                if(regPwd.test(pwd)==false){
+                    $('#pwd_msg').html('密码强度太低(包含大小写字母、数字、特殊字符)').removeClass('green').addClass('red');
+                    $('#but1').attr('type','button');
+                }else{
+                    $('#pwd_msg').html('可用').addClass('green');
+                    $('#but1').attr('type','submit');
+                }
+            }
+            //邮箱
+            if($(this).is('#email')){
+                var Email = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                var email = $(this).val();
+                if(Email.test(email)==false||email==''){
+                    $('#email_msg').html('邮箱格式不正确').removeClass('green').addClass('red');
+                    $('#but1').attr('type','button');
+                }else{
+                    $('#email_msg').html('可用').addClass('green');
+                    $('#but1').attr('type','submit');
+                }
+            }
+            //手机
+            if($(this).is('#phone')){
+                var Phone = /^1[34578]\d{9}$/;
+                var phone = $(this).val();
+                if(Phone.test(phone)==false||phone==''){
+                    $('#phone_msg').html('手机号格式不正确').removeClass('green').addClass('red');
+                    $('#but1').attr('type','button');
+                }else{
+                    $('#phone_msg').html('可用').addClass('green');
+                    $('#but1').attr('type','submit');
+                }
+            }
+
+
+            //密码...手机...邮箱...
+        }).keyup(function(event) {
+            console.log("抬起直接调用blur......");
+            $(this).triggerHandler('blur')
+        }).focus(function(event) {
+            $(this).triggerHandler('blur')
+        });
+
+        //3. 表单提交时.各种规则验证
+        $('form').submit(function(event) {
+            var isGo= true;
+            //判断,失败标记值=false
+            $("input.required").each(function(){
+                zhi = $(this).val().trim();//去空格
+                if(zhi==''||zhi.length==0){
+                    isGo= false;
+                }
+            });
+            return isGo;
+
+        });
+
+    })
+
+</script>
+
+</body>
+
+</html>
